@@ -1,0 +1,6 @@
+{
+  "name": "Maharashtra Heritage Explorer",
+  "description": "AI-powered Marathi culture & heritage platform and historical fort tourism portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

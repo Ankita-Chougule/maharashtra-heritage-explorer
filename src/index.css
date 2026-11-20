@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --color-ivory: #FAF5EC;
+    --color-sandstone: #E7D5BC;
+    --color-burnt-orange: #C65D24;
+    --color-terracotta: #9D4226;
+    --color-espresso: #35251D;
+    --color-olive: #777A50;
+    --color-card-bg: #FFFFFF;
+    --color-border: #E7D5BC;
+  }
+
+  .dark, html.dark, body.dark {
+    --color-ivory: #12100E;
+    --color-sandstone: #221C16;
+    --color-burnt-orange: #E67E22;
+    --color-terracotta: #D35400;
+    --color-espresso: #F5EAE0;
+    --color-olive: #A3A67D;
+    --color-card-bg: #1B1713;
+    --color-border: #352C22;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-espresso);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  h1, h2, h3, .font-heritage {
+    font-family: 'Cinzel', 'Noto Sans Devanagari', serif;
+  }
+
+  .font-devanagari {
+    font-family: 'Noto Sans Devanagari', 'Cinzel', sans-serif;
+  }
+}
+
+/* Instant Full-Site Dark Theme Class Overrides */
+html.dark {
+  color-scheme: dark;
+  background-color: #12100E !important;
+  color: #F5EAE0 !important;
+}
+
+html.dark body {
+  background-color: #12100E !important;
+  color: #F5EAE0 !important;
+}
+
+/* Backgrounds in Dark Mode */
+html.dark .bg-\[\#FAF5EC\] {
+  background-color: #12100E !important;
+}
+
+html.dark header.bg-\[\#FAF5EC\]\/95 {
+  background-color: rgba(18, 16, 14, 0.96) !important;
+}
+
+html.dark .bg-\[\#FAF5EC\]\/95 {
+  background-color: rgba(18, 16, 14, 0.95) !important;
+}
+
+html.dark .bg-\[\#FAF5EC\]\/15 {
+  background-color: rgba(245, 234, 224, 0.08) !important;
+}
+
+html.dark .bg-\[\#FAF5EC\]\/25 {
+  background-color: rgba(245, 234, 224, 0.15) !important;
+}
+
+html.dark .bg-\[\#E7D5BC\] {
+  background-color: #221C16 !important;
+}
+
+html.dark .bg-\[\#E7D5BC\]\/20,
+html.dark .bg-\[\#E7D5BC\]\/30,
+html.dark .bg-\[\#E7D5BC\]\/35,
+html.dark .bg-\[\#E7D5BC\]\/40,
+html.dark .bg-\[\#E7D5BC\]\/50,
+html.dark .bg-\[\#E7D5BC\]\/60 {
+  background-color: #221C16 !important;
+}
+
+/* Cards & Panels in Dark Mode */
+html.dark [class*="rounded-"][class*="border"] {
+  background-color: #1B1713;
+}
+
+html.dark .bg-\[\#35251D\] {
+  background-color: #16120E !important;
+}
+
+html.dark .bg-\[\#35251D\]\/80,
+html.dark .bg-\[\#35251D\]\/90 {
+  background-color: rgba(18, 16, 14, 0.92) !important;
+}
+
+/* Text Colors in Dark Mode */
+html.dark .text-\[\#35251D\] {
+  color: #F5EAE0 !important;
+}
+
+html.dark .text-\[\#35251D\]\/60,
+html.dark .text-\[\#35251D\]\/70,
+html.dark .text-\[\#35251D\]\/75,
+html.dark .text-\[\#35251D\]\/80,
+html.dark .text-\[\#35251D\]\/85,
+html.dark .text-\[\#35251D\]\/90 {
+  color: rgba(245, 234, 224, 0.85) !important;
+}
+
+html.dark .text-\[\#777A50\] {
+  color: #A3A67D !important;
+}
+
+/* Borders in Dark Mode */
+html.dark .border-\[\#E7D5BC\],
+html.dark .border-\[\#E7D5BC\]\/30,
+html.dark .border-\[\#E7D5BC\]\/60,
+html.dark .border-\[\#E7D5BC\]\/70,
+html.dark .border-\[\#E7D5BC\]\/80 {
+  border-color: #352C22 !important;
+}
+
+/* Form inputs & selects in Dark Mode */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #221C16 !important;
+  color: #F5EAE0 !important;
+  border-color: #352C22 !important;
+}
+
+html.dark input::placeholder {
+  color: rgba(245, 234, 224, 0.4) !important;
+}
+
+/* Custom subtle scrollbar with warm stone theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: #BFA88F;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C65D24;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3F3429;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #E67E22;
+}
+
+/* Touch-optimized smooth scrolling for horizontal pill lists */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
