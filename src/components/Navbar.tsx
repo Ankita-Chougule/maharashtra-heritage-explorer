@@ -7,7 +7,6 @@ import {
   X, 
   Shield, 
   Compass, 
-  Sparkles, 
   BookOpen, 
   Calendar, 
   UserCheck, 
@@ -114,27 +113,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Zone 3: Toggles (Language & Theme) + Standalone Chatbot Option + Primary Action */}
+          {/* Zone 3: Toggles (Language & Theme) + Primary Action */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Standalone Separate Chatbot Option Button */}
-            <button
-              onClick={() => handleNavClick('chatbot')}
-              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer shadow-sm border ${
-                currentTab === 'chatbot'
-                  ? 'bg-gradient-to-r from-[#C65D24] to-[#9D4226] text-white border-[#C65D24] shadow-md shadow-[#C65D24]/25 ring-2 ring-[#C65D24]/40'
-                  : 'bg-[#C65D24]/10 dark:bg-[#C65D24]/20 text-[#C65D24] dark:text-[#E67E22] border-[#C65D24]/30 hover:bg-[#C65D24] hover:text-white dark:hover:bg-[#E67E22] dark:hover:text-[#12100E]'
-              }`}
-              title="AI Heritage Chatbot"
-              aria-label="Open AI Heritage Chatbot"
-            >
-              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-pulse text-current" />
-              <span className="hidden sm:inline">{t.nav.chatbot}</span>
-              <span className="sm:hidden font-mono text-[11px]">AI</span>
-              <span className="hidden md:inline-block text-[9px] uppercase tracking-wider px-1.5 py-0.2 rounded-full font-mono bg-[#C65D24]/20 dark:bg-[#C65D24]/40 font-bold">
-                AI
-              </span>
-            </button>
-
             {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
@@ -251,24 +231,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             )}
           </div>
-
-          {/* Featured Separate Chatbot Option in Mobile Menu */}
-          <button
-            onClick={() => handleNavClick('chatbot')}
-            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-bold transition-all cursor-pointer border ${
-              currentTab === 'chatbot'
-                ? 'bg-gradient-to-r from-[#C65D24] to-[#9D4226] text-white border-[#C65D24] shadow-sm'
-                : 'bg-[#C65D24]/10 dark:bg-[#C65D24]/20 text-[#C65D24] dark:text-[#E67E22] border-[#C65D24]/30 hover:bg-[#C65D24] hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <Sparkles className="w-4 h-4 animate-pulse" />
-              <span>{t.nav.chatbot}</span>
-            </div>
-            <span className="text-[10px] font-mono uppercase bg-[#C65D24]/20 dark:bg-[#C65D24]/40 px-2 py-0.5 rounded font-bold">
-              AI Guide
-            </span>
-          </button>
 
           {navItems.map((item) => {
             const Icon = item.icon;

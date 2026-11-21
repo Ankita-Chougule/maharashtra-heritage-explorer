@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { BRANDING_CONFIG } from '../config/branding';
-import { Compass, Sparkles, Shield, ChevronRight, Landmark, Calendar, CheckCircle2 } from 'lucide-react';
+import { Compass, Shield, ChevronRight, Landmark, Calendar, CheckCircle2 } from 'lucide-react';
 import { useThemeLanguage } from '../context/ThemeLanguageContext';
 import heroImagePath from '../assets/images/maharashtra_fort_hero_1793012657295.jpg';
 
 interface HeroProps {
   onExploreClick: () => void;
-  onAskAIClick: () => void;
+  onAskAIClick?: () => void;
   onDiscoverEventsClick?: () => void;
 }
 
@@ -94,14 +94,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onAskAIClick, onDisc
                 <span>{language === 'mr' ? 'मोहिमा व उपक्रम' : 'Discover Events'}</span>
               </button>
             )}
-
-            <button
-              onClick={onAskAIClick}
-              className="px-5 py-3 rounded-lg bg-[#FAF5EC]/15 hover:bg-[#FAF5EC]/25 text-[#FAF5EC] border border-[#E7D5BC]/30 font-semibold text-xs sm:text-sm backdrop-blur-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 text-[#C65D24]" />
-              <span>{language === 'mr' ? 'एआय संवादकाशी बोला' : 'Ask AI Chatbot'}</span>
-            </button>
           </div>
 
           {/* Curatorial Note */}

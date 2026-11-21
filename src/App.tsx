@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Sparkles, Bot } from 'lucide-react';
 import { FORTS_DATA, FortItem } from './data/fortsData';
 import { HeritageEvent } from './data/sampleEvents';
 import { TourismServiceItem } from './data/sampleServices';
@@ -215,24 +215,51 @@ export default function App() {
         actionMessage={authPromptMessage}
       />
 
-      {/* 6. Persistent Floating Chatbot Action Button (FAB) */}
+      {/* 6. Creative Persistent Floating AI Chatbot Action Button (FAB) - Right side middle */}
       {currentTab !== 'chatbot' && (
         <button
           onClick={() => handleSelectTab('chatbot')}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#C65D24] to-[#9D4226] hover:from-[#B5501B] hover:to-[#88351B] text-white shadow-xl shadow-[#C65D24]/35 hover:shadow-2xl hover:shadow-[#C65D24]/50 hover:scale-105 active:scale-95 transition-all duration-200 border-2 border-[#FAF5EC]/30 cursor-pointer group"
+          className="fixed top-1/2 -translate-y-1/2 right-0 z-40 group flex flex-col items-center text-white cursor-pointer transition-all duration-300 hover:-translate-x-1 hover:scale-[1.04] active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#C65D24]/40"
           title={language === 'mr' ? 'एआय चॅटबॉट उघडा' : 'Open AI Chatbot'}
           aria-label="Open AI Heritage Chatbot"
         >
-          <div className="relative flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-amber-200 animate-pulse group-hover:rotate-12 transition-transform" />
-            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-300"></span>
-            </span>
+          {/* Ambient Multi-Layer Radial Glow */}
+          <div className="absolute -inset-1 rounded-l-full bg-gradient-to-r from-[#C65D24] via-[#E67E22] to-[#B5501B] opacity-70 blur-md group-hover:opacity-100 group-hover:blur-lg transition-all duration-500 animate-pulse pointer-events-none" />
+
+          {/* Ripple Pulse Wave */}
+          <span className="absolute -inset-1 rounded-l-full border border-amber-400/40 animate-ping opacity-35 pointer-events-none" />
+
+          {/* Main Creative Horizontal Capsule Surface */}
+          <div className="relative flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-l-full bg-gradient-to-r from-[#C65D24] via-[#B85320] to-[#9D4226] shadow-2xl shadow-[#C65D24]/50 border-2 border-r-0 border-amber-200/40 overflow-hidden">
+            {/* Dynamic Diagonal Shimmer Sheen on Hover */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+
+            {/* Creative Icon Orb with Live Status */}
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/25 backdrop-blur-sm flex items-center justify-center border border-white/30 shadow-inner group-hover:rotate-6 transition-transform duration-300">
+              <Bot className="w-5 h-5 text-amber-100 group-hover:scale-110 transition-transform" />
+              <Sparkles className="w-3 h-3 text-amber-300 absolute -top-1 -right-1 animate-pulse" />
+              {/* Live pulsing dot */}
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 border border-white/60"></span>
+              </span>
+            </div>
+
+            {/* Horizontal Text & Badges */}
+            <div className="flex flex-col text-left">
+              <div className="flex items-center gap-1.5">
+                <span className="font-heritage font-bold text-xs sm:text-sm tracking-wide text-white drop-shadow-sm whitespace-nowrap">
+                  {language === 'mr' ? 'एआय संवादक' : 'AI Chatbot'}
+                </span>
+                <span className="text-[9px] font-mono font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-amber-400/30 text-amber-100 border border-amber-300/40">
+                  AI
+                </span>
+              </div>
+              <span className="text-[10px] text-amber-100/90 font-medium leading-tight whitespace-nowrap">
+                {language === 'mr' ? 'दुर्ग मार्गदर्शक' : 'Fort & Heritage Guide'}
+              </span>
+            </div>
           </div>
-          <span className="font-semibold text-xs sm:text-sm tracking-wide">
-            {language === 'mr' ? 'एआय चॅटबॉट' : 'AI Chatbot'}
-          </span>
         </button>
       )}
     </div>

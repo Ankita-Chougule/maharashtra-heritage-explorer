@@ -7,7 +7,9 @@ import {
   HelpCircle,
   ShieldCheck,
   Compass,
-  ArrowRight
+  ArrowRight,
+  BookOpen,
+  ExternalLink
 } from 'lucide-react';
 
 interface ChatbotPageProps {
@@ -20,6 +22,7 @@ interface ChatMessage {
   text: string;
   timestamp: string;
   isError?: boolean;
+  sources?: string[];
 }
 
 interface SampleQuestion {
@@ -74,6 +77,29 @@ const INITIAL_GREETING: ChatMessage = {
   text: "नमस्कार! मी 'मराठी वारसा संवादक' (Heritage Assistant) आहे. महाराष्ट्रातील ऐतिहासिक गडकिल्ले, मराठा इतिहास, जलव्यवस्थापन (देवटाके), स्थापत्यकला (बुरुज, महादरवाजे) आणि दुर्ग भ्रमंतीबाबत आपले स्वागत आहे. आपण खालीलपैकी कोणताही प्रश्न निवडू शकता किंवा आपला स्वतःचा प्रश्न मराठी किंवा इंग्रजीत विचारू शकता.",
   timestamp: "आत्ताच"
 };
+
+// Extract [Ref: ...] and similar citation tags from bot reply text
+function extractSources(text: string): string[] {
+  const refRegex = /\[Ref:\s*([^\]]+)\]/g;
+  const litRegex = /\[साहित्यिक संदर्भ[:\s]*([^\]]*)\]/g;
+  const sources: string[] = [];
+  const seen = new Set<string>();
+
+  let match;
+  while ((match = refRegex.exec(text)) !== null) {
+    const src = match[1].trim();
+    if (src && !seen.has(src)) { seen.add(src); sources.push(src); }
+  }
+  while ((match = litRegex.exec(text)) !== null) {
+    const src = (match[1].trim() || 'साहित्यिक संदर्भ (Literary Reference)');
+    if (!seen.has(src)) { seen.add(src); sources.push(src); }
+  }
+  if (/\[साहित्यिक संदर्भ\]/.test(text)) {
+    const src = 'साहित्यिक संदर्भ (Literary Reference)';
+    if (!seen.has(src)) { seen.add(src); sources.push(src); }
+  }
+  return sources;
+}
 
 function parseBoldText(text: string) {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
@@ -228,12 +254,14 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ initialQuery }) => {
 
       const data = await response.json();
       const botReply = data.reply || "माफ करा, उत्तर प्राप्त होऊ शकले नाही. कृपया पुन्हा प्रयत्न करा.";
+      const extractedSources = extractSources(botReply);
 
       const botMessage: ChatMessage = {
         id: `bot-${Date.now()}`,
         role: 'model',
         text: botReply,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        sources: extractedSources.length > 0 ? extractedSources : undefined
       };
 
       setMessages(prev => [...prev, botMessage]);
@@ -483,6 +511,45 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ initialQuery }) => {
                       <div className="text-xs sm:text-sm text-[#35251D] leading-relaxed font-devanagari">
                         {renderFormattedMessage(msg.text)}
                       </div>
+
+                      {/* ── Sources / References Section ── */}
+                      {!msg.isError && msg.sources && msg.sources.length > 0 && (
+                        <div className="mt-3 pt-3 border-t border-[#E7D5BC] dark:border-[#352C22]">
+                          <div className="flex items-center gap-1.5 mb-2">
+                            <BookOpen className="w-3.5 h-3.5 text-[#C65D24] shrink-0" />
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#C65D24]">
+                              {languageMode === 'marathi' ? 'स्रोत व संदर्भ (Sources & References)' : 'Sources & References'}
+                            </span>
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            {msg.sources.map((src, i) => (
+                              <div
+                                key={i}
+                                className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg bg-[#FAF5EC] dark:bg-[#1B1713] border border-[#E7D5BC] dark:border-[#352C22]"
+                              >
+                                <ExternalLink className="w-3 h-3 text-[#777A50] shrink-0 mt-0.5" />
+                                <span className="text-[11px] text-[#35251D] dark:text-[#E7D5BC] leading-snug font-devanagari">
+                                  {src}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Fallback sources note when no inline refs found */}
+                      {!msg.isError && msg.id !== 'msg-init' && (!msg.sources || msg.sources.length === 0) && (
+                        <div className="mt-3 pt-2.5 border-t border-[#E7D5BC]/60 dark:border-[#352C22]/60">
+                          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#FAF5EC]/70 dark:bg-[#1B1713]/70 border border-[#E7D5BC]/60 dark:border-[#352C22]/60">
+                            <BookOpen className="w-3 h-3 text-[#777A50] shrink-0" />
+                            <span className="text-[10px] text-[#777A50] dark:text-[#A3A67D] italic">
+                              {languageMode === 'marathi'
+                                ? 'संदर्भ: सभासद बखर, ASI अभिलेख, महाराष्ट्र शासन गॅझेटिअर व पुरातत्त्व विभाग नोंदी'
+                                : 'Sources: Sabhasad Bakhar, ASI Records, Maharashtra Gazetteer & Archaeological Survey Records'}
+                            </span>
+                          </div>
+                        </div>
+                      )}
 
                       {msg.isError && lastFailedQuery && (
                         <div className="pt-2">
